@@ -26,7 +26,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal("uiskin.json"));
-        backgroundTexture = new Texture(Gdx.files.internal("assets/mandala-1.png"));
+        backgroundTexture = new Texture(Gdx.files.internal("mandala-1.png"));
     }
 
     @Override
