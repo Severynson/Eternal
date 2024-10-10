@@ -1,4 +1,4 @@
-package com.css.eternal;
+package com.css.eternal.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.css.eternal.EternalGame;
+import com.css.eternal.screens.levels.Level1;
 import com.badlogic.gdx.graphics.Color;
 
 public class MainMenuScreen implements Screen {
@@ -70,7 +72,7 @@ public class MainMenuScreen implements Screen {
         newGameButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new LevelScreen(game, 1));
+                game.setScreen(new Level1(game));
                 return true;
             }
         });
