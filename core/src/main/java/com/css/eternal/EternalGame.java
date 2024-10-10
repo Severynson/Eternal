@@ -6,7 +6,7 @@ import com.css.eternal.screens.MainMenuScreen;
 
 public class EternalGame extends Game {
     private static EternalGame instance;
-    private SpriteBatch batch;
+    public SpriteBatch batch;
 
     public static EternalGame getInstance() {
         return instance;
