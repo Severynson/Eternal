@@ -64,14 +64,12 @@ public class Level1 extends BaseLevel {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.getBatch().setProjectionMatrix(dialogue.stage.getCamera().combined);
-
         // Update and render the dialogue's stage
         Stage dialogueStage = dialogue.getStage();
         dialogueStage.act(delta);
         dialogueStage.draw();
 
-        // Update and draw the stage
+        // Update and draw the stage of the level1
         stage.act(delta);
         stage.draw();
     }
@@ -79,6 +77,7 @@ public class Level1 extends BaseLevel {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        dialogue.getStage().getViewport().update(width, height, true);
     }
 
     @Override

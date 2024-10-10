@@ -99,4 +99,8 @@ public class Dialogue {
     public Stage getStage() {
         return stage;
     }
+
+    public Viewport getViewport() {
+        return viewport;
+    }
 }
