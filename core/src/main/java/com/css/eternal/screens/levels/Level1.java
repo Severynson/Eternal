@@ -3,36 +3,35 @@ package com.css.eternal.screens.levels;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.css.eternal.EternalGame;
 import com.css.eternal.domain.Utterance;
 import com.css.eternal.scenes.Dialogue;
-import com.css.eternal.ui.DialogueBox;
+import java.util.List;
 
 public class Level1 extends BaseLevel {
     private Stage stage;
-    private DialogueBox dialogueBox;
     private Dialogue dialogue;
     private List<Utterance> firstDialoguesBlock;
 
     public Level1(EternalGame game) {
         super(game);
-        ArrayList<Utterance> utterances = new ArrayList<Utterance>();
-        utterances.add(new Utterance("Name 1",
-                "1) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        utterances.add(new Utterance("Name 2",
-                "2) Different Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        utterances.add(new Utterance("Name 3",
-                "3) One more different Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
+
     }
 
     @Override
     protected void setupLevel() {
         stage = new Stage(gameViewport);
+
+        firstDialoguesBlock = new ArrayList<Utterance>();
+        firstDialoguesBlock.add(new Utterance("Name 1",
+                "1) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
+        firstDialoguesBlock.add(new Utterance("Name 2",
+                "2) Different Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
+        firstDialoguesBlock.add(new Utterance("Name 3",
+                "3) One more different Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
+
         dialogue = new Dialogue(game, firstDialoguesBlock);
         Gdx.input.setInputProcessor(stage);
     }
@@ -56,6 +55,7 @@ public class Level1 extends BaseLevel {
     public void show() {
         setupCommonResources();
         setupLevel();
+        Gdx.input.setInputProcessor(dialogue.getStage());
     }
 
     @Override
@@ -65,8 +65,11 @@ public class Level1 extends BaseLevel {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.getBatch().setProjectionMatrix(dialogue.stage.getCamera().combined);
-        dialogue.stage.act(delta);
-        dialogue.stage.draw();
+
+        // Update and render the dialogue's stage
+        Stage dialogueStage = dialogue.getStage();
+        dialogueStage.act(delta);
+        dialogueStage.draw();
 
         // Update and draw the stage
         stage.act(delta);
