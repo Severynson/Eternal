@@ -17,15 +17,23 @@ public class Level1 extends BaseLevel {
     private Stage stage;
     private DialogueBox dialogueBox;
     private Dialogue dialogue;
+    private List<Utterance> firstDialoguesBlock;
 
     public Level1(EternalGame game) {
         super(game);
+        ArrayList<Utterance> utterances = new ArrayList<Utterance>();
+        utterances.add(new Utterance("Name 1",
+                "1) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
+        utterances.add(new Utterance("Name 2",
+                "2) Different Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
+        utterances.add(new Utterance("Name 3",
+                "3) One more different Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
     }
 
     @Override
     protected void setupLevel() {
         stage = new Stage(gameViewport);
-        dialogue = new Dialogue();
+        dialogue = new Dialogue(game, firstDialoguesBlock);
         Gdx.input.setInputProcessor(stage);
     }
 

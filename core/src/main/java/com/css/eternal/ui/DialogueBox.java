@@ -31,8 +31,6 @@ import com.badlogic.gdx.graphics.Color;
 //         viewport = new StretchViewport(1024, 768);
 //         stage = new Stage(viewport);
 
-        
-
 //         // Load the background texture
 //         backgroundTexture = new Texture(Gdx.files.internal("DialogueBox.png"));
 //         // TextureRegionDrawable backgroundDrawable = new TextureRegionDrawable(new
@@ -117,7 +115,7 @@ import com.badlogic.gdx.graphics.Color;
 //         backgroundTexture = new Texture(Gdx.files.internal("DialogueBox.png"));
 //         TextureRegionDrawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(backgroundTexture));
 //         // backgroundDrawable.setMinWidth(Gdx.graphics.getWidth());
-       
+
 //         this.setBackground(backgroundDrawable);
 
 //         font = new BitmapFont();
@@ -173,7 +171,6 @@ import com.badlogic.gdx.graphics.Color;
 //         whiteTexture.dispose();
 //     }
 // }
-
 
 public class DialogueBox extends Table {
     private List<Utterance> utterances;
