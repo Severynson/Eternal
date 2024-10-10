@@ -1,6 +1,7 @@
-package com.css.eternal;
+package com.css.eternal.screens;
 
 import com.badlogic.gdx.Screen;
+import com.css.eternal.EternalGame;
 
 public class FirstPersonScreen implements Screen {
     private final EternalGame game;

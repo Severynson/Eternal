@@ -1,18 +1,31 @@
 package com.css.eternal;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.css.eternal.screens.MainMenuScreen;
 
 public class EternalGame extends Game {
+    private static EternalGame instance;
+    private SpriteBatch batch;
+
+    public static EternalGame getInstance() {
+        return instance;
+    }
+
     @Override
     public void create() {
+        instance = this;
+        batch = new SpriteBatch();
         setScreen(new MainMenuScreen(this));
     }
 
-    public void startLevel(int levelNumber) {
-        setScreen(new LevelScreen(this, levelNumber));
+    public SpriteBatch getBatch() {
+        return batch;
     }
 
-    public void showFirstPersonView() {
-        setScreen(new FirstPersonScreen(this));
+    @Override
+    public void dispose() {
+        batch.dispose();
+        super.dispose();
     }
 }

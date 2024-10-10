@@ -1,4 +1,4 @@
-package com.css.eternal;
+package com.css.eternal.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.css.eternal.EternalGame;
 
 public class LevelScreen implements Screen {
     private final EternalGame game;

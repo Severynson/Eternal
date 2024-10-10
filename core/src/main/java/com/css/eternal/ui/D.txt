@@ -1,0 +1,169 @@
+package com.css.eternal.ui;
+
+import java.util.List;
+
+// import java.util.List;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
+import com.css.eternal.EternalGame;
+import com.css.eternal.domain.Utterance;
+// Temporary needed
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.Color;
+
+// public class DialogueBox extends Table {
+//     private BitmapFont font;
+//     private Label dialogueLabel;
+//     private Texture backgroundTexture;
+//     private List<Utterance> utterances;
+
+//     ShapeRenderer shapeRenderer = new ShapeRenderer(); // Needed temporarily
+
+//     public DialogueBox(List<Utterance> utterances) {
+//         this.utterances = utterances;
+
+//         shapeRenderer = new ShapeRenderer(); // Needed temporarily
+
+//         backgroundTexture = new Texture(Gdx.files.internal("DialogueBox.png"));
+//         TextureRegionDrawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(backgroundTexture));
+
+//         setBackground(backgroundDrawable);
+
+//         font = new BitmapFont();
+//         Label.LabelStyle labelStyle = new Label.LabelStyle();
+//         labelStyle.font = font;
+
+//         dialogueLabel = new Label("", labelStyle);
+//         dialogueLabel.setWrap(true);
+//         dialogueLabel.setAlignment(Align.center);
+
+//         add(dialogueLabel).expand().fill().center().pad(10);
+
+//         // Set the DialogueBox size to the full screen width and desired height
+
+//         setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2);
+//         setPosition(0, 0);
+//     }
+
+//     public void drawBorders(float x, float y, float width, float height) {
+//         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+//         shapeRenderer.setColor(Color.RED);
+//         // Draw top border
+//         shapeRenderer.rect(x, y + height - 1, width, 1);
+//         // Draw bottom border
+//         shapeRenderer.rect(x, y, width, 1);
+//         // Draw left border
+//         shapeRenderer.rect(x, y, 1, height);
+//         // Draw right border
+//         shapeRenderer.rect(x + width - 1, y, 1, height);
+//         shapeRenderer.end();
+//     }
+
+//     public void setDialogueText(String text) {
+//         dialogueLabel.setText(text);
+//     }
+
+//     @Override
+//     public void draw(Batch batch, float parentAlpha) {
+//         // super.draw(batch, parentAlpha);
+
+//         // batch.setProjectionMatrix(camera.combined);
+//         batch.begin();
+//         batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2);
+//         batch.end();
+//         // drawBorders(getX(), getY(), getWidth(), getHeight()); // Needed temporarily
+//     }
+
+//     public void dispose() {
+//         backgroundTexture.dispose();
+//         font.dispose();
+//         shapeRenderer.dispose();
+//     }
+
+//     public void resize(int width, int height) {
+//         setSize(width, height / 4);
+//         // setPosition(0, height / 2 - getHeight() / 2);
+//         setPosition(0, 0);
+//     }
+// }
+
+public class DialogueBox extends Table {
+    private BitmapFont font;
+    private Label dialogueLabel;
+    private Texture backgroundTexture;
+    private List<Utterance> utterances;
+
+    ShapeRenderer shapeRenderer = new ShapeRenderer(); // Needed temporarily
+
+    public DialogueBox(List<Utterance> utterances) {
+        this.utterances = utterances;
+
+        shapeRenderer = new ShapeRenderer(); // Needed temporarily
+
+        backgroundTexture = new Texture(Gdx.files.internal("DialogueBox.png"));
+        TextureRegionDrawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(backgroundTexture));
+
+        setBackground(backgroundDrawable);
+
+        font = new BitmapFont();
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+
+        dialogueLabel = new Label("", labelStyle);
+        dialogueLabel.setWrap(true);
+        dialogueLabel.setAlignment(Align.center);
+
+        add(dialogueLabel).expand().fill().center().pad(10);
+
+        // Set the DialogueBox size to the full screen width and desired height
+        setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2);
+        setPosition(0, 0);
+    }
+
+    public void drawBorders(float x, float y, float width, float height) {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.RED);
+        // Draw top border
+        shapeRenderer.rect(x, y + height - 1, width, 1);
+        // Draw bottom border
+        shapeRenderer.rect(x, y, width, 1);
+        // Draw left border
+        shapeRenderer.rect(x, y, 1, height);
+        // Draw right border
+        shapeRenderer.rect(x + width - 1, y, 1, height);
+        shapeRenderer.end();
+    }
+
+    public void setDialogueText(String text) {
+        dialogueLabel.setText(text);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        Batch gameBatch = EternalGame.getInstance().getBatch();
+        gameBatch.begin();
+        gameBatch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2);
+        font.draw(gameBatch, dialogueLabel.getText(), getX() + 10, getY() + getHeight() - 10);
+        gameBatch.end();
+    }
+
+    public void dispose() {
+        backgroundTexture.dispose();
+        font.dispose();
+        shapeRenderer.dispose();
+    }
+
+    public void resize(int width, int height) {
+        setSize(width, height / 2);
+        setPosition(0, 0);
+    }
+}
