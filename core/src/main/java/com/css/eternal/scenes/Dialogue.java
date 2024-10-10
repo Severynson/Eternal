@@ -23,6 +23,8 @@ public class Dialogue {
     private BitmapFont font;
     private Label utteranceLabel;
     private Label interlocutorNameLabel;
+    private Label buttonLeftLabel;
+    private Label buttonRightLabel;
     private List<Utterance> utterances;
 
     public Dialogue(EternalGame game, List<Utterance> utterances) {
@@ -39,15 +41,20 @@ public class Dialogue {
         utteranceLabel = new Label(
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 labelStyle);
+        buttonLeftLabel = new Label("<", labelStyle);
+        buttonRightLabel = new Label(">", labelStyle);
 
         table.top();
         table.setSize(game.V_WIDTH, game.V_HEIGHT * 0.6f);
         table.setBackground(
                 new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("DialogueBox.png")))));
 
-        table.add(interlocutorNameLabel).expandX().padTop(40).left().padLeft(10);
+        table.add(interlocutorNameLabel).expandX().padTop(40).left().padLeft(10).colspan(2);
         table.row();
-        table.add(utteranceLabel).expand().fill().center().pad(10);
+        table.add(utteranceLabel).expand().fill().center().pad(10).colspan(2);
+        table.row();
+        table.add(buttonLeftLabel).expandX().right().pad(10);
+        table.add(buttonRightLabel).expandX().left().pad(10);
 
         utteranceLabel.setWrap(true);
         utteranceLabel.setAlignment(Align.center);
