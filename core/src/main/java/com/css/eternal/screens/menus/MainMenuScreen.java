@@ -20,6 +20,18 @@ public class MainMenuScreen extends MenuScreen implements Screen {
         this.game = game;
     }
 
+    private void startNewGame() {
+        game.setScreen(new Level1(game));
+    }
+
+    private void continueGame() {
+        game.setScreen(new SavesMenuScreen(game));
+    }
+
+    private void exitApp() {
+        Gdx.app.exit();
+    }
+
     @Override
     public void show() {
         super.show();
@@ -34,7 +46,7 @@ public class MainMenuScreen extends MenuScreen implements Screen {
         continueButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new SavesMenuScreen(game));
+                continueGame();
                 return true;
             }
         });
@@ -44,7 +56,7 @@ public class MainMenuScreen extends MenuScreen implements Screen {
         newGameButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new Level1(game));
+                startNewGame();
                 return true;
             }
         });
@@ -54,7 +66,7 @@ public class MainMenuScreen extends MenuScreen implements Screen {
         exitButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.exit();
+                exitApp();
                 return true;
             }
         });

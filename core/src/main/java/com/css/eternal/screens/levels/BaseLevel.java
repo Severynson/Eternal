@@ -10,15 +10,19 @@ import com.css.eternal.EternalGame;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public abstract class BaseLevel implements Screen {
-    protected EternalGame game;
+    private EternalGame game;
     private OrthographicCamera gameCamera;
-    protected Viewport gameViewport;
+    private Viewport gameViewport;
 
     public BaseLevel(EternalGame game) {
         this.game = game;
         gameCamera = new OrthographicCamera();
         gameCamera.setToOrtho(false, 1024, 768);
         gameViewport = new FitViewport(1024, 768, gameCamera);
+    }
+
+    public Viewport getViewport() {
+        return gameViewport;
     }
 
     // Common properties and methods for all levels

@@ -1,0 +1,252 @@
+@startuml
+rectangle "Root application folder" {
+
+class EternalGame {
+- batch: SpriteBatch
+- VIRTUAL_WITH: int
+- VIRTUAL_HEIGHT: int
+
++ getBatch() SpriteBatch
++ getVirtualWidth(): int
++ getVirtualHeight(): int
++ create(): void
++ dispose(): void
+
+}
+
+rectangle "LibGDX classes" {
+class Screen {
+    + show(): void
+    + render(delta: float): void
+    + resize(width: int, height: int): void
+    + pause(): void
+    + resume(): void
+    + hide(): void
+    + dispose(): void
+}
+
+class Sprite {
+    + texture: Texture
+    + x: float
+    + y: float
+    + width: float
+    + height: float
+    + draw(batch: SpriteBatch): void
+}
+
+class Stage {
+    + viewport: Viewport
+    + actors: Array<Actor>
+    + root: Group
+    + batch: SpriteBatch
+    + addActor(actor: Actor): void
+    + draw(): void
+    + act(delta: float): void
+}
+
+class Viewport {
+    + worldWidth: float
+    + worldHeight: float
+    + screenWidth: int
+    + screenHeight: int
+    + camera: Camera
+    + update(screenWidth: int, screenHeight: int, centerCamera: boolean): void
+    + apply(): void
+}
+
+class OrthographicCamera {
+    + zoom: float
+    + position: Vector3
+    + direction: Vector3
+    + up: Vector3
+    + near: float
+    + far: float
+    + setToOrtho(yDown: boolean, viewportWidth: float, viewportHeight: float): void
+    + update(): void
+}
+
+}
+
+rectangle Screens {
+
+
+
+rectangle Menus {
+class MenuScreen {
+    - stage: Stage
+    - skin: Skin
+    - backgroundTexture: Texture
+    - menuTable: Table
+    + menuScreen(): void
+    + show(): void
+    + getMenuTable(): Table
+    + getSkin(): Skin
+    + render(delta: float): void
+    + resize(width: int, height: int): void
+    + dispose(): void
+}
+
+class MainMenuScreen {
+    - game: EternalGame
+    + MainMenuScreen(game: EternalGame): void
+    - startNewGame(): void
+    - continueGame(): void
+    - exitApp(): void
+    + show(): void
+    + render(delta: float): void
+    + resize(width: int, height: int): void
+    + dispose(): void
+}
+
+class SavesMenuScreen {
+    - game: EternalGame
+    - saveFilesManager: SaveFilesManager
+    + SavesMenuScreen(game: EternalGame): void
+    - displaySaveFiles(): void
+    + show(): void
+    + render(delta: float): void
+    + resize(width: int, height: int): void
+    + dispose(): void
+}
+}
+
+rectangle Levels {
+
+class BaseLevel {
+    - game: EternalGame
+    - gameCamera: OrthographicCamera
+    - gameViewport: Viewport
+    + BaseLevel(game: EternalGame): void
+    # setupCommonResources(): void
+    # setupLevel(): void
+    + resize(width: int, height: int): void
+    + render(delta: float): void
+}
+
+class Level1 {
+    - game: EternalGame
+    - stage: Stage
+    - dialogue: Dialogue
+    - firstDialoguesBlock: List<Utterance>
+    # setupLevel(): void
+    + show(): void
+    + render(delta: float): void
+    + resize(width: int, height: int): void
+    + dispose(): void
+}
+class Level2 {
+same as Level1
+}
+class Level3 {
+same as Level1
+}
+class Level4 {
+same as Level1
+}
+class Level5 {
+same as Level1
+}
+
+}
+
+}
+
+rectangle Scenes {
+class Dialogue {
+    - stage: Stage
+    - viewport: Viewport
+    - font: BitmapFont
+    - utteranceLabel: Label
+    - interlocutorNameLabel: Label
+    - buttonLeftLabel: Label
+    - buttonRightLabel: Label
+    - utterances: List<Utterance>
+    - currentIndex: int
+    + Dialogue(game: EternalGame, utterances: List<Utterance>): void
+    + nextUtterance(): void
+    + previousUtterance(): void
+    + updateDialogue(): void
+    + getStage(): Stage
+    + getViewport(): Viewport
+}
+}
+
+rectangle Domain {
+class Utterance {
+    - speakerID: string
+    - text: string
+    + Utterance(speakerID: string, text: string): void
+    - getCharacterByID(ID: string): Sprite
+    + getSpeakerID(): string
+    + getSpeakerName(): string
+    + getSpeakerPicture(): TextureRegionDrawable
+    + getText(): string
+    + setText(text: string): void
+    + setSpeakerID(speakerID: string): void
+}
+}
+
+rectangle Sprites {
+class Character {
+    + String name
+    + float speed
+    + Vector2 velocity
+    + void update(float deltaTime)
+    + void move()
+    + void jump()
+    + void attack()
+}
+
+class Protagonist {
+    + void handleControl(): void
+}
+class NPC {
+    + void walkRoute(): void
+    + void enemyDetection(): void
+    + void setOponent(oponent: Sprite): void
+    + void attackTheOponent(): void
+}
+class FriendlyNPC {
+    + void followProtagonist(): void
+}
+class Enemy {
+    + void detectMainCharacter(): void
+    + void detectFriendlyNpc(): void
+}
+
+}
+}
+
+
+EternalGame *-- MainMenuScreen
+
+Screen <|.. MenuScreen
+Screen <|.. BaseLevel
+
+MenuScreen <|-- MainMenuScreen
+MenuScreen <|-- SavesMenuScreen
+
+BaseLevel <|-- Level1
+BaseLevel  <|-- Level2
+BaseLevel  <|-- Level3
+BaseLevel  <|-- Level4
+BaseLevel  <|-- Level5
+
+Dialogue *-- Utterance
+
+BaseLevel *-- Viewport
+BaseLevel *-- OrthographicCamera
+Level1 *-- Stage
+Level2 *-- Stage
+Level3 *-- Stage
+Level4 *-- Stage
+Level5 *-- Stage
+
+Sprite <|-- Character
+Character <|-- Protagonist
+Character <|-- NPC
+NPC <|-- FriendlyNPC
+NPC <|-- Enemy
+
+
+@enduml
