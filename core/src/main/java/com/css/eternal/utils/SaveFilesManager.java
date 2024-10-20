@@ -2,14 +2,10 @@ package com.css.eternal.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.Gdx;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.internal.bind.DefaultDateTypeAdapter.DateType;
 
 public class SaveFilesManager {
 

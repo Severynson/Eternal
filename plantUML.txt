@@ -55,6 +55,32 @@ package "LibGDX" {
   	+ setToOrtho(boolean, float, float)
   	+ update()
   }
+
+  class TiledMap {
+    + getLayers(): MapLayers
+    + getProperties(): MapProperties
+    + getTileSets(): TiledMapTileSets
+    + dispose(): void
+    + getTile(int, int): TiledMapTile
+    + getWidth(): int
+    + getHeight(): int
+    + getTileWidth(): int
+    + getTileHeight(): int
+  }
+
+  class OrthogonalTiledMapRenderer {
+    - map: TiledMap
+    - unitScale: float
+    + OrthogonalTiledMapRenderer(TiledMap)
+    + setView(OrthographicCamera)
+    + render(): void
+    + dispose(): void
+  }
+
+  class TmxMapLoader {
+    + load(String): TiledMap
+  }
+
 }
 
 package "Core" {
@@ -65,6 +91,8 @@ package "Core" {
     + getBatch(): SpriteBatch
     + getVirtualWidth(): int
     + getVirtualHeight(): int
+    + getMapRenderer(): OrthogonalTiledMapRenderer
+    + loadMap(String): void
     + create(): void
     + dispose(): void
     + run(): void
@@ -156,7 +184,8 @@ package "Screens" {
         # gameCamera: OrthographicCamera 
         # gameViewport: Viewport 
         # screen: Screen 
-        + BaseLevel(game: EternalGame): void 
+        + BaseLevel(game: EternalGame): void
+        - mapRenderer: OrthogonalTiledMapRenderer
         # setupCommonResources(): void 
         # setupLevel(): void 
         + resize(width: int, height: int): void 
@@ -304,6 +333,9 @@ EternalGame *-- LoadMenuScreen
 EternalGame *-- OptionsMenuScreen
 EternalGame *-- PauseMenuScreen
 EternalGame *-- "5" BaseLevel
+EternalGame *-- TiledMap
+EternalGame *-- OrthogonalTiledMapRenderer
+TiledMap <.. TmxMapLoader
 
 Screen <|.. MenuScreen
 Screen <|.. BaseLevel
@@ -323,6 +355,7 @@ BaseLevel <|-- Consciousness
 Dialogue *-- "1..*" Utterance
 Dialogue -- BaseLevel
 
+BaseLevel *-- OrthogonalTiledMapRenderer
 BaseLevel *-- Viewport
 BaseLevel *-- OrthographicCamera
 Knowledge *-- Stage
