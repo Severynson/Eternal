@@ -5,6 +5,8 @@ skinparam linetype ortho
 skinparam nodesep 5
 skinparam ranksep 50
 
+rectangle {
+
 package "LibGDX" {
   class Screen {
     + show(): void    
@@ -325,6 +327,7 @@ package "Sprites" {
 	    detectMainCharacter()        
 	    detectFriendlyNpc()        
 	  }         
+}
 }
 
 EternalGame *-- MainMenuScreen
