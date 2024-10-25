@@ -1,3 +1,6 @@
+# Saves will be unique for the each user and dummy files can be generated automatically by the "dummy_saves_generator.py"
+/saves/*.json
+
 ## Gradle:
 .gradle/
 gradle-app.setting
