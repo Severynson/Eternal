@@ -11,18 +11,19 @@ import com.css.eternal.scenes.Dialogue;
 import java.util.List;
 
 public class Level1 extends BaseLevel {
+    private EternalGame game;
     private Stage stage;
     private Dialogue dialogue;
     private List<Utterance> firstDialoguesBlock;
 
     public Level1(EternalGame game) {
         super(game);
-
+        this.game = game;
     }
 
     @Override
     protected void setupLevel() {
-        stage = new Stage(gameViewport);
+        stage = new Stage(super.getViewport());
 
         firstDialoguesBlock = new ArrayList<Utterance>();
         firstDialoguesBlock.add(new Utterance("Name 1",
