@@ -13,15 +13,43 @@ import com.css.eternal.EternalGame;
 import com.css.eternal.screens.levels.Level1;
 import com.css.eternal.utils.SaveFilesManager;
 import com.badlogic.gdx.graphics.Color;
+import java.util.List;
+import java.util.ArrayList;
 
 public class SavesMenuScreen extends MenuScreen implements Screen {
     private final EternalGame game;
     private final SaveFilesManager saveFilesManager;
+    private List<TextButton> displayedSaves;
 
     public SavesMenuScreen(EternalGame game) {
         super(game);
         this.game = game;
         this.saveFilesManager = new SaveFilesManager();
+        this.displayedSaves = new ArrayList<>();
+    }
+
+    private void updateMenuTable() {
+        Table menuTable = super.getMenuTable();
+        menuTable.clear();
+
+        Label titleLabel = new Label("Saves", super.getSkin());
+        titleLabel.setFontScale(3);
+        titleLabel.setAlignment(Align.center);
+        titleLabel.setColor(Color.DARK_GRAY);
+        menuTable.add(titleLabel).expandX().padTop(50).center().row();
+
+        displaySaveFiles();
+
+        TextButton exitButton = new TextButton("Back", super.getSkin());
+        exitButton.getLabel().setFontScale(1.5f);
+        exitButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new MainMenuScreen(game));
+                return true;
+            }
+        });
+        menuTable.add(exitButton).expandX().padTop(20).center().bottom().row();
     }
 
     private void displaySaveFiles() {
@@ -35,19 +63,19 @@ public class SavesMenuScreen extends MenuScreen implements Screen {
             noSavesLabel.setAlignment(Align.center);
             noSavesLabel.setColor(Color.BLACK);
             menuTable.add(noSavesLabel).expandX().padTop(20).center().row();
-        } else
+        } else {
+            displayedSaves.clear();
+
             saveFilesManager.getSaves().forEach(save -> {
                 TextButton saveButton = new TextButton(save.levelTitle + " - " + save.getLastModifiedFormatted(),
                         skin);
                 saveButton.getLabel().setFontScale(1.5f);
                 saveButton.addListener(new InputListener() {
-
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                         if (button == Buttons.LEFT) {
                             game.setScreen(new Level1(game)); // TODO: Implement level loading with save data.
                         } else if (button == Buttons.RIGHT) {
-                            // saveFilesManager.deleteSaveFileByTitle(save.fileTitle);
                             Table deleteTable = new Table();
                             Label deleteLabel = new Label("Delete?", skin);
                             deleteLabel.setFontScale(2);
@@ -62,6 +90,7 @@ public class SavesMenuScreen extends MenuScreen implements Screen {
                                 @Override
                                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                                     saveFilesManager.deleteSaveFileByTitle(save.fileTitle);
+                                    updateMenuTable();
                                     return true;
                                 }
                             });
@@ -72,7 +101,7 @@ public class SavesMenuScreen extends MenuScreen implements Screen {
                             noButton.addListener(new InputListener() {
                                 @Override
                                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                                    deleteTable.remove();
+                                    updateMenuTable();
                                     return true;
                                 }
                             });
@@ -87,35 +116,15 @@ public class SavesMenuScreen extends MenuScreen implements Screen {
                 });
 
                 menuTable.add(saveButton).expandX().padTop(20).center().row();
+                displayedSaves.add(saveButton);
             });
-
+        }
     }
 
     @Override
     public void show() {
         super.show();
-
-        Label titleLabel = new Label("Saves", super.getSkin());
-        titleLabel.setFontScale(3);
-        titleLabel.setAlignment(Align.center);
-        titleLabel.setColor(Color.DARK_GRAY);
-
-        Table menuTable = super.getMenuTable();
-        menuTable.add(titleLabel).expandX().padTop(50).center().row();
-
-        TextButton exitButton = new TextButton("Back", super.getSkin());
-        exitButton.getLabel().setFontScale(1.5f);
-        exitButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new MainMenuScreen(game));
-                return true;
-            }
-        });
-
-        displaySaveFiles();
-
-        menuTable.add(exitButton).expandX().padTop(20).center().bottom().row();
+        updateMenuTable();
     }
 
     @Override

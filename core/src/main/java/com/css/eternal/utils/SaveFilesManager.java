@@ -52,6 +52,7 @@ public class SaveFilesManager {
         forEachSaveFile(file -> {
             if (file.nameWithoutExtension().equals(title) && file.extension().equals("json")) {
                 file.delete();
+                saves.removeIf(save -> save.fileTitle.equals(title));
             }
         });
         return false;
